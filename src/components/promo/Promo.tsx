@@ -4,7 +4,7 @@ import { getProductsById } from "../../services/ProductService";
 import LoadingWrapper from "../ui/loadingWrapper/LoadingWrapper";
 
 const Promo: FC = () => {
-  const promoProductId = 88;
+  const promoProductId = 10;
 
   const [product, setProduct] = useState<IProduct | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);

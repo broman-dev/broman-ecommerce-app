@@ -1,0 +1,93 @@
+.select-list {
+  position: relative;
+  border-radius: 12px;
+}
+
+.arrow {
+  position: absolute;
+  display: flex;
+  align-self: center;
+  width: 16px;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 30px;
+  padding: 5px;
+  margin-right: 24px;
+  cursor: pointer;
+  border: 1px;
+  color: rgba(0, 0, 0, 0.6);
+  background: rgb(255, 255, 255);
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 2px;
+  min-width: 100px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+}
+
+.placeholder[data-selected="true"] {
+  color: rgb(0, 0, 0);
+}
+
+.select-list[data-is-active="true"] .arrow {
+  transform: rotateX(180deg) translateY(50%);
+  margin-top: 2px;
+}
+
+.selectWrapper[data-is-active="true"] .placeholder {
+  border: 1px solid #0022f5 !important;
+}
+
+.selectWrapper:not([data-is-active="true"])
+  .placeholder:not([data-status="invalid"]):hover {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.select {
+  display: grid;
+  position: absolute;
+  list-style: none;
+  width: max-content;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  z-index: 10;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.option {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 30px;
+  width: 100%;
+  min-width: max-content;
+  padding: 5px 10px;
+  border: 1px;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  background-color: rgba(255, 255, 255, 1);
+  color: rgb(0, 0, 0);
+}
+
+.option[aria-selected="true"] {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.option:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

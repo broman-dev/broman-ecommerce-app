@@ -9,11 +9,15 @@ type getProductsResponse = {
 
 export async function getProducts(
   limit: number,
-  skip: number
+  skip: number,
+  sortValue: string | null
 ): Promise<getProductsResponse> {
-  const response = await fetch(
-    `${baseUrl}/products?limit=${limit}&skip=${skip}`
-  );
+  let apiPath = `${baseUrl}/products?limit=${limit}&skip=${skip}`;
+  if (sortValue && sortValue.includes('-')) {
+    let sort = sortValue.split("-");
+    apiPath += `&sortBy=${sort[0]}&order=${sort[1]}`;
+  }
+  const response = await fetch(apiPath);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
@@ -23,11 +27,15 @@ export async function getProducts(
 export async function getProductsByCategory(
   category: string,
   limit: number,
-  skip: number
+  skip: number,
+  sortValue: string | null
 ): Promise<getProductsResponse> {
-  const response = await fetch(
-    `${baseUrl}/products/category/${category}?limit=${limit}&skip=${skip}`
-  );
+  let apiPath = `${baseUrl}/products/category/${category}?limit=${limit}&skip=${skip}`;
+  if (sortValue && sortValue.includes('-')) {
+    let sort = sortValue.split("-");
+    apiPath += `&sortBy=${sort[0]}&order=${sort[1]}`;
+  }
+  const response = await fetch(apiPath);
   if (!response.ok) {
     throw new Error(response.statusText);
   }

@@ -7,11 +7,29 @@
   justify-content: center;
 }
 
+.catalog-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .pagination-wrapper {
   width: 100%;
   border-radius: 8px;
   padding: 15px 10px;
   display: flex;
+}
+
+.sorting-wrapper {
+  display: flex;
+  gap: .1rem;
+  align-items: center;
+
+  .placeholder {
+    border: none;
+    border-bottom: 2px solid #dfdfdf;
+    border-radius: 0;
+    min-width: min-content;
+  }
 }
 
 .section-title {
