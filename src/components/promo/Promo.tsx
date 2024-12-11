@@ -1,7 +1,7 @@
 import { FC, useEffect, useLayoutEffect, useState } from "react";
 import { IProduct } from "../../interfaces/IProduct";
 import { getProductsById } from "../../services/ProductService";
-import LoadingWrapper from "../ui/LoadingWrapper/LoadingWrapper";
+import LoadingWrapper from "../ui/loadingWrapper/LoadingWrapper";
 
 const Promo: FC = () => {
   const promoProductId = 88;

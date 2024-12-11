@@ -1,25 +1,32 @@
-aside {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  min-width: 300px;
-}
-
-main {
-  display: grid;
-  grid-template-rows: repeat(auto-fill, minmax(max-content, 300px));
-  grid-template-columns: repeat(auto-fill, minmax(max-content, 280px));
+.content-wrapper {
+  display: flex;
   gap: 1rem;
-}
+  margin: 1rem auto;
 
-.aside-widget {
-  .widget-title {
-    font-size: 1.5rem;
-    font-weight: bolder;
+  aside {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    min-width: 300px;
   }
 
-  .widget-content {
-    margin-top: 10px;
-    padding: 0.1rem;
+  main {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    flex-basis: 100%;
+    padding: 2rem;
+  }
+
+  .aside-widget {
+    .widget-title {
+      font-size: 1.5rem;
+      font-weight: bolder;
+    }
+
+    .widget-content {
+      margin-top: 10px;
+      padding: 0.1rem;
+    }
   }
 }

@@ -4,7 +4,7 @@ import { ICategory } from "../../../../interfaces/ICategory";
 import { getAllCategories } from "../../../../services/CategoryService";
 import { useParams } from "react-router-dom";
 import loader from "../../../../assets/loading.gif";
-import LoadingWrapper from "../../../ui/LoadingWrapper/LoadingWrapper";
+import LoadingWrapper from "../../../ui/loadingWrapper/LoadingWrapper";
 
 const CategoriesWidget: FC = () => {
   const { category } = useParams();

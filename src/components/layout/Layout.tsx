@@ -12,7 +12,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
           <Promo />
       </div>
 
-      <div className="flex items-start gap-4 w-full container mx-auto px-5 py-24 md:flex-row flex-col">
+      <div className="container content-wrapper">
         <Sidebar />
         <main className="w-full bg-white rounded-sm p-8">{children}</main>
       </div>
