@@ -1,10 +1,7 @@
 import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { IProduct } from "../../interfaces/IProduct";
 import ProductCard from "../../components/productCard/ProductCard";
-import {
-  getProducts,
-  getProductsByCategory,
-} from "../../services/ProductService";
+import { getProducts } from "../../services/ProductService";
 import { useParams, useSearchParams, useLocation } from "react-router-dom";
 import "./Catalog.scss";
 import Layout from "../../components/layout/Layout";
@@ -29,75 +26,71 @@ const sortingOptions = [
 ];
 
 export const Catalog: FC = () => {
+  // Core stuff's
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { category } = useParams();
-  const [searchParams] = useSearchParams();
   const location = useLocation();
-  const [products, setProducts] = useState<IProduct[]>([]);
-
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    category ?? null
-  );
-
-  const pageQueryParam = (searchParams.get("page") ?? 1) as number;
-  const [currentPage, setCurrentPage] = useState<number>(pageQueryParam);
-
+  const { categoryParam } = useParams();
+  const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [itemsPerPage, setItemsPerPage] = useState<number>(12);
-  const [itemsCount, setItemsCount] = useState<number>(0);
+  // Initiate "items"
+  const [items, setItems] = useState<IProduct[]>([]);
+
+  // Initiate "currentCattegory"
+  const [cattegory, setCattegory] = useState<string | null>(
+    categoryParam ?? null
+  );
+
+  // Initiate "currentPage"
+  const [currentPage, setCurrentPage] = useState<number>(
+    (searchParams.get("page") ?? 1) as number
+  );
+
+  // Initiate "limit" and "skip"
+  const [limit, setLimit] = useState<number>(12);
+  const [skipCount, setSkipCount] = useState<number>(
+    currentPage * limit - limit
+  );
+
+  // Initiate "sortIndex"
+  const [sortIndex, setSortIndex] = useState<number>(0);
+
+  // Initiate "totalCount" and "fetchedCount"
+  const [totalCount, setTotalCount] = useState<number>(0);
   const [fetchedCount, setFetchedCount] = useState<number>(0);
-  const [skipCount, setSkipCount] = useState<number>(currentPage * itemsPerPage - itemsPerPage);
 
-  const [sortOptIndex, setSortOptIndex] = useState<number>(0);
-
-
-
+  // Get category from pathname
   useEffect(() => {
-    const pathname = location.pathname.split('/');
-    if (pathname.length == 3)
-    {
-      setSelectedCategory(pathname[2]);
-    }
-    else {
-      setSelectedCategory(null);
+    const pathname = location.pathname.split("/");
+    const newCategory = pathname.length == 3 ? pathname[2] : undefined;
+
+    if (newCategory != cattegory) {
+      setCattegory(newCategory ?? null);
     }
 
     setCurrentPage((searchParams.get("page") ?? 1) as number);
   }, [location]);
 
-  useEffect(() => {
-    const skip = currentPage * itemsPerPage - itemsPerPage;
-    setSkipCount(skip);
-
-    if (!!selectedCategory) {
-      getProductsByCategory(
-        selectedCategory,
-        itemsPerPage,
-        skipCount,
-        sortingOptions[sortOptIndex]?.value ?? null
-      ).then((response) => {
-        setProducts(response.products);
+  useLayoutEffect(() => {
+    getProducts(
+      cattegory,
+      limit,
+      skipCount,
+      sortingOptions[sortIndex]?.value ?? null
+    )
+      .then((response) => {
         setFetchedCount(response.limit);
-        setItemsCount(response.total);
+        setTotalCount(response.total);
+        setItems(response.products);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
-    } else {
-      getProducts(
-        itemsPerPage,
-        skipCount,
-        sortingOptions[sortOptIndex]?.value ?? null
-      ).then((response) => {
-        setProducts(response.products);
-        setFetchedCount(response.limit);
-        setItemsCount(response.total);
-        setIsLoading(false);
-      });
-    }
-  }, [currentPage, sortOptIndex, selectedCategory]);
+  }, [cattegory, skipCount, sortIndex]);
 
   const paginationHandler = (page: number) => {
-    setCurrentPage(page);
+    console.log("paginationHandler", page)
+    setSkipCount(page * limit - limit);
     window.scrollTo({
       behavior: "smooth",
       top: scrollRef.current!.getBoundingClientRect().x - 60,
@@ -105,7 +98,7 @@ export const Catalog: FC = () => {
   };
 
   const sortingHandler = (option: Option, index: number) => {
-    setSortOptIndex(index);
+    setSortIndex(index);
   };
 
   return (
@@ -118,10 +111,10 @@ export const Catalog: FC = () => {
               <span>
                 Showing{" "}
                 <strong>
-                  {itemsCount == 0 ? "0" : skipCount + 1}-
+                  {totalCount == 0 ? "0" : skipCount + 1}-
                   {skipCount + fetchedCount}
                 </strong>{" "}
-                of <strong>{itemsCount}</strong> products
+                of <strong>{totalCount}</strong> products
               </span>
             </div>
             <div className="sorting-wrapper">
@@ -136,16 +129,17 @@ export const Catalog: FC = () => {
           </div>
 
           <div className="catalog-grid">
-            {products.map((product) => (
+            {items.map((product) => (
               <ProductCard key={product.id} item={product} />
             ))}
           </div>
           <div className="pagination-wrapper">
             <Pagination
-              itemsPerPage={itemsPerPage}
-              itemsCount={itemsCount}
+              itemsPerPage={limit}
+              itemsCount={totalCount}
               currentPage={currentPage}
               span={3}
+              onChange={paginationHandler}
             />
           </div>
         </LoadingWrapper>

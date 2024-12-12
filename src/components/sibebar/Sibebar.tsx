@@ -1,6 +1,6 @@
 import { FC } from "react";
 import "./Sibebar.scss";
-import CategoriesWidget from "./widgets/Categories/Categories";
+import CategoriesWidget from "./widgets/categories/Categories";
 
 const Sibebar: FC = () => {
   return (

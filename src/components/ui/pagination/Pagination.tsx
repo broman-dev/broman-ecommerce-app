@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Link } from "react-router-dom";
+import { FC, useEffect, useLayoutEffect, useState } from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import "./Pagination.scss";
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,8 +21,8 @@ const generatePages = (
 
   let pages: number[] = [];
   for (
-    let page: number = currentPage - span > 0 ? currentPage - span : 1;
-    page <= (currentPage + span > totalPages ? totalPages : currentPage + span);
+    let page: number = currentPage - span >= 1 ? currentPage - span : 1;
+    page <= (currentPage + span < totalPages ? currentPage + span : totalPages);
     page++
   ) {
     pages.push(page);
@@ -33,18 +33,47 @@ const generatePages = (
 const Pagination: FC<PaginationProps> = ({
   itemsPerPage,
   itemsCount,
-  currentPage,
   span,
+  onChange,
 }) => {
-  const totalPages = Math.ceil(itemsCount / itemsPerPage);
-  const pages = generatePages(currentPage, totalPages, span);
-  const prevPage = currentPage - 1;
-  const nextPage = currentPage + 1;
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const [page, setPage] = useState<number>(
+    (searchParams.get("page") ?? 1) as number
+  );
+  const [totalPages, setTotalPages] = useState<number>(
+    Math.ceil(itemsCount / itemsPerPage)
+  );
+
+  const [pages, setPages] = useState<number[]>(
+    generatePages(page, totalPages, span)
+  );
+
+  const prevPage = page - 1;
+  const nextPage = prevPage + 2;
+
+  useEffect(() => {
+    const paramPage = (searchParams.get("page") ?? 1) as number;
+    setPage(paramPage);
+  }, [location]);
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(itemsCount / itemsPerPage));
+  }, [itemsCount, itemsPerPage]);
+
+  useEffect(() => {
+    setPages(generatePages(page, totalPages, span));
+    console.log("onChange call ", page);
+    onChange(page);
+  }, [page, totalPages, itemsCount]);
 
   return (
     <div className="pagination">
-      {prevPage > 0 && (
+      {prevPage >= 1 && (
         <Link
+          onClick={() => {
+            setPage(prevPage);
+          }}
           className="pagination-item"
           to={{
             search: `?page=${prevPage}`,
@@ -54,24 +83,30 @@ const Pagination: FC<PaginationProps> = ({
         </Link>
       )}
 
-      {pages.map((page) => {
+      {pages.map((pageNumber) => {
         return (
           <Link
-            key={page}
+            onClick={() => {
+              setPage(pageNumber);
+            }}
+            key={pageNumber}
             className={`pagination-item ${
-              currentPage == page ? "active" : undefined
+              page == pageNumber ? "active" : undefined
             }`}
             to={{
-              search: `?page=${page}`,
+              search: `?page=${pageNumber}`,
             }}
           >
-            {page}
+            {pageNumber}
           </Link>
         );
       })}
 
-      {nextPage < totalPages && (
+      {nextPage <= totalPages && (
         <Link
+          onClick={() => {
+            setPage(nextPage);
+          }}
           className="pagination-item"
           to={{
             search: `?page=${nextPage}`,

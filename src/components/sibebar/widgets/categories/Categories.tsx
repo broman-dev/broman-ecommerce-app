@@ -3,11 +3,10 @@ import "./Categories.scss";
 import { ICategory } from "../../../../interfaces/ICategory";
 import { getAllCategories } from "../../../../services/CategoryService";
 import { Link, useParams } from "react-router-dom";
-import loader from "../../../../assets/loading.gif";
 import LoadingWrapper from "../../../ui/loadingWrapper/LoadingWrapper";
 
 const CategoriesWidget: FC = () => {
-  const { category } = useParams();
+  const { categoryParam } = useParams();
   const [items, setItems] = useState<ICategory[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -25,7 +24,7 @@ const CategoriesWidget: FC = () => {
         <ul>
           <LoadingWrapper isLoading={isLoading}>
             <>
-              <li className={category ? undefined : "active"}>
+              <li className={categoryParam ? undefined : "active"}>
                 <Link
                   to={{
                     pathname: `/catalog`,
@@ -37,7 +36,7 @@ const CategoriesWidget: FC = () => {
               {items.map((item) => (
                 <li
                   key={item.slug}
-                  className={category === item.slug ? "active" : undefined}
+                  className={categoryParam === item.slug ? "active" : undefined}
                 >
                   <Link
                     to={{

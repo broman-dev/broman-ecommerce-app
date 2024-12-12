@@ -9,39 +9,31 @@ type getProductsResponse = {
 };
 
 export async function getProducts(
+  category: string | null,
   limit: number,
   skip: number,
   sortValue: string | null
 ): Promise<getProductsResponse> {
-  let apiPath = `${baseUrl}/products?limit=${limit}&skip=${skip}`;
-  if (sortValue && sortValue.includes('-')) {
-    let sort = sortValue.split("-");
-    apiPath += `&sortBy=${sort[0]}&order=${sort[1]}`;
-  }
-  console.log(apiPath)
-  const response = await fetch(apiPath);
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  return await (response.json() as Promise<getProductsResponse>);
-}
+  let queryPath = `/products`;
 
-export async function getProductsByCategory(
-  category: string,
-  limit: number,
-  skip: number,
-  sortValue: string | null
-): Promise<getProductsResponse> {
-  let apiPath = `${baseUrl}/products/category/${category}?limit=${limit}&skip=${skip}`;
+  if (category) {
+    queryPath += `/category/${category}`
+  }
+
+  queryPath += `?limit=${limit}&skip=${skip}`;
+
   if (sortValue && sortValue.includes('-')) {
     let sort = sortValue.split("-");
-    apiPath += `&sortBy=${sort[0]}&order=${sort[1]}`;
+    queryPath += `&sortBy=${sort[0]}&order=${sort[1]}`;
   }
-  console.log(apiPath)
-  const response = await fetch(apiPath);
+
+  console.log(`${baseUrl}${queryPath}`);
+
+  const response = await fetch(`${baseUrl}${queryPath}`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
+
   return await (response.json() as Promise<getProductsResponse>);
 }
 
