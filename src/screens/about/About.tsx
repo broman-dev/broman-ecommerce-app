@@ -6,7 +6,7 @@ const About: FC = () => {
     <Layout sidebar={false}>
       <section>
         <div className="section-title">About</div>
-        <p>TO DO: About Page Content</p>
+        <p>Whoopsss, this page is ugly without content, but you can trust that React routings are working perfectly since you landed on this page.</p>
       </section>
     </Layout>
   );
