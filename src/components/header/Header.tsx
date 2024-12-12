@@ -20,8 +20,6 @@ const Header: FC = () => {
             </section>
 
             <section className="flex items-center">
-                {getTotalSum!().toFixed(2)} €
-                
                 <button
                     onClick={() => setIsCartVisible(!isCartVisible)}
                     className="py-4 px-1 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Cart">

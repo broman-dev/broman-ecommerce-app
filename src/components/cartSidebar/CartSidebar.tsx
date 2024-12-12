@@ -109,30 +109,32 @@ const CartSidebar: FC<CartSidebarProps> = ({ close }) => {
                 </div>
               </div>
 
-              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <div className="flex justify-between text-base font-medium text-gray-900">
-                  <p>Subtotal</p>
-                  <p>{getTotalSum!().toFixed(2)} €</p>
-                </div>
-                <p className="mt-0.5 text-sm text-gray-500">
-                  Shipping and taxes calculated at checkout.
-                </p>
-                <div className="flex justify-between mt-6">
-                  <a
-                    onClick={clearCart}
-                    className="flex items-center justify-center rounded-md border border-transparent bg-[#b35959] cursor-pointer px-6 py-3 text-base font-medium text-white shadow-sm hover:scale-[1.1]"
-                  >
-                    Clear All
-                  </a>
+              {items.length > 0 && (
+                <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                  <div className="flex justify-between text-base font-medium text-gray-900">
+                    <p>Subtotal</p>
+                    <p>{getTotalSum!().toFixed(2)} €</p>
+                  </div>
+                  <p className="mt-0.5 text-sm text-gray-500">
+                    Shipping and taxes calculated at checkout.
+                  </p>
+                  <div className="flex justify-between mt-6">
+                    <a
+                      onClick={clearCart}
+                      className="flex items-center justify-center rounded-md border border-transparent bg-[#b35959] cursor-pointer px-6 py-3 text-base font-medium text-white shadow-sm hover:scale-[1.1]"
+                    >
+                      Clear All
+                    </a>
 
-                  <Link
-                    to="/cart"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:scale-[1.1]"
-                  >
-                    Checkout
-                  </Link>
+                    <Link
+                      to="/cart"
+                      className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:scale-[1.1]"
+                    >
+                      Checkout
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
