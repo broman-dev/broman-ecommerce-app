@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import "./Pagination.scss";
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
@@ -35,7 +35,6 @@ const Pagination: FC<PaginationProps> = ({
   itemsCount,
   currentPage,
   span,
-  onChange,
 }) => {
   const totalPages = Math.ceil(itemsCount / itemsPerPage);
   const pages = generatePages(currentPage, totalPages, span);
@@ -47,7 +46,6 @@ const Pagination: FC<PaginationProps> = ({
       {prevPage > 0 && (
         <Link
           className="pagination-item"
-          onClick={() => onChange(prevPage)}
           to={{
             search: `?page=${prevPage}`,
           }}
@@ -63,7 +61,6 @@ const Pagination: FC<PaginationProps> = ({
             className={`pagination-item ${
               currentPage == page ? "active" : undefined
             }`}
-            onClick={() => onChange(page)}
             to={{
               search: `?page=${page}`,
             }}
@@ -76,7 +73,6 @@ const Pagination: FC<PaginationProps> = ({
       {nextPage < totalPages && (
         <Link
           className="pagination-item"
-          onClick={() => onChange(nextPage)}
           to={{
             search: `?page=${nextPage}`,
           }}

@@ -39,49 +39,57 @@ export const Catalog: FC = () => {
     category ?? null
   );
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(12);
-  const [itemsCount, setItemsCount] = useState<number>(0);
-
-  const [sortOptIndex, setSortOptIndex] = useState<number>(0);
-
   const pageQueryParam = (searchParams.get("page") ?? 1) as number;
   const [currentPage, setCurrentPage] = useState<number>(pageQueryParam);
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [itemsPerPage, setItemsPerPage] = useState<number>(12);
+  const [itemsCount, setItemsCount] = useState<number>(0);
+  const [fetchedCount, setFetchedCount] = useState<number>(0);
+  const [skipCount, setSkipCount] = useState<number>(currentPage * itemsPerPage - itemsPerPage);
+
+  const [sortOptIndex, setSortOptIndex] = useState<number>(0);
+
+
+
   useEffect(() => {
-    const containCategory = location.pathname.includes("/catalog");
-    if (containCategory) {
-      let cat = location.pathname.split("/").pop();
-      if (cat == "catalog") cat = undefined;
-      setSelectedCategory(cat ?? null);
+    const pathname = location.pathname.split('/');
+    if (pathname.length == 3)
+    {
+      setSelectedCategory(pathname[2]);
     }
+    else {
+      setSelectedCategory(null);
+    }
+
+    setCurrentPage((searchParams.get("page") ?? 1) as number);
   }, [location]);
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedCategory]);
-
-  useLayoutEffect(() => {
     const skip = currentPage * itemsPerPage - itemsPerPage;
+    setSkipCount(skip);
 
     if (!!selectedCategory) {
       getProductsByCategory(
         selectedCategory,
         itemsPerPage,
-        skip,
+        skipCount,
         sortingOptions[sortOptIndex]?.value ?? null
       ).then((response) => {
         setProducts(response.products);
+        setFetchedCount(response.limit);
         setItemsCount(response.total);
         setIsLoading(false);
       });
     } else {
       getProducts(
         itemsPerPage,
-        skip,
+        skipCount,
         sortingOptions[sortOptIndex]?.value ?? null
       ).then((response) => {
         setProducts(response.products);
+        setFetchedCount(response.limit);
         setItemsCount(response.total);
         setIsLoading(false);
       });
@@ -102,7 +110,7 @@ export const Catalog: FC = () => {
 
   return (
     <>
-      <Layout>
+      <Layout sidebar={true}>
         <LoadingWrapper isLoading={isLoading}>
           <div className="catalog-header" ref={scrollRef}>
             <div>
@@ -110,8 +118,8 @@ export const Catalog: FC = () => {
               <span>
                 Showing{" "}
                 <strong>
-                  {itemsPerPage * (currentPage - 1) + 1}-
-                  {itemsPerPage * currentPage}
+                  {itemsCount == 0 ? "0" : skipCount + 1}-
+                  {skipCount + fetchedCount}
                 </strong>{" "}
                 of <strong>{itemsCount}</strong> products
               </span>
@@ -134,7 +142,6 @@ export const Catalog: FC = () => {
           </div>
           <div className="pagination-wrapper">
             <Pagination
-              onChange={paginationHandler}
               itemsPerPage={itemsPerPage}
               itemsCount={itemsCount}
               currentPage={currentPage}

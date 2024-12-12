@@ -5,6 +5,7 @@ const baseUrl = "https://dummyjson.com";
 type getProductsResponse = {
   products: IProduct[];
   total: number;
+  limit: number;
 };
 
 export async function getProducts(
@@ -17,6 +18,7 @@ export async function getProducts(
     let sort = sortValue.split("-");
     apiPath += `&sortBy=${sort[0]}&order=${sort[1]}`;
   }
+  console.log(apiPath)
   const response = await fetch(apiPath);
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -35,6 +37,7 @@ export async function getProductsByCategory(
     let sort = sortValue.split("-");
     apiPath += `&sortBy=${sort[0]}&order=${sort[1]}`;
   }
+  console.log(apiPath)
   const response = await fetch(apiPath);
   if (!response.ok) {
     throw new Error(response.statusText);

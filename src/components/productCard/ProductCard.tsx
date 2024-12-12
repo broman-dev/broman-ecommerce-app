@@ -23,8 +23,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
         {getQuantity!(item?.id!) == 0 ? (
           <a
             onClick={() => addToCart!({ product: item, quantity: 1 })}
-            className="buy"
-          >
+            className="buy">
             Buy Now
           </a>
         ) : (

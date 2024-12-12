@@ -1,16 +1,13 @@
-.cart-sidebar {
+.cart-sidebar-wrapper {
     @apply drop-shadow-md;
 
     position: fixed;
-    top:101px;
+    top:0;
     right: 0;
-    bottom: 0;
-    width: 400px;
-    height: calc(100vh - 100px);
-    
-    background-color: rgba(0, 0, 0, 0.186);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
     transition: all .2s ease;
     z-index: 5;
-
-
+    overflow: hidden;
 }

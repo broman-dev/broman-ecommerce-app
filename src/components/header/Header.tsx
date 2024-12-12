@@ -4,6 +4,7 @@ import Navigation from "../navigation/Navigation"
 import QuantityPicker from "../ui/quantityPicker/QuantityPicker";
 import Logo from "../../assets/logo.png"
 import { useCart } from "../../hooks/useCart";
+import CartSidebar from "../cartSidebar/CartSidebar";
 
 const Header: FC = () => {
     const { items, getTotalSum, clearCart} = useCart();
@@ -35,9 +36,8 @@ const Header: FC = () => {
                         </span>
                     }
                 </button>
-                <div className={`cart-sidebar p-6 font-semibold ${isCartVisible ? null : "hidden"}`}>
-                    <h2>Shopping Cart</h2>
-                    <button onClick={clearCart}>Clear</button>
+                <div className={`cart-sidebar-wrapper font-semibold ${isCartVisible ? null : "hidden"}`}>
+                    <CartSidebar close={() => setIsCartVisible(!isCartVisible)}/>
                 </div>
             </section>
         </header>

@@ -1,7 +1,8 @@
-import { FC } from "react";
 import Layout from "../../components/layout/Layout";
+import "./Cart.scss";
+import { FC } from "react";
 
-const Contact: FC = () => {
+const Cart: FC = () => {
   return (
     <Layout sidebar={false}>
       <section>
@@ -12,4 +13,4 @@ const Contact: FC = () => {
   );
 };
 
-export default Contact;
+export default Cart;

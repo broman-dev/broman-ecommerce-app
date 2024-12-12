@@ -1,21 +1,28 @@
 import { FC, PropsWithChildren } from "react";
 import "./Layout.scss";
-import Sidebar from "../sibebar/Sibebar"
+import Sidebar from "../sibebar/Sibebar";
 import Header from "../header/Header";
 import Promo from "../promo/Promo";
+import Footer from "../footer/Footer";
 
-const Layout: FC<PropsWithChildren> = ({ children }) => {
+type LayoutProps = {
+  sidebar: boolean;
+};
+
+const Layout: FC<PropsWithChildren<LayoutProps>> = ({ children, sidebar }) => {
   return (
     <>
       <Header />
       <div className="pt-[80px] bg-[#85d6a736]">
-          <Promo />
+        <Promo />
       </div>
 
       <div className="container content-wrapper">
-        <Sidebar />
-        <main className="w-full bg-white rounded-sm p-8">{children}</main>
+        {sidebar && <Sidebar />}
+        <main>{children}</main>
       </div>
+
+      <Footer />
     </>
   );
 };

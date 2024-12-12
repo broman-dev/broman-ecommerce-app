@@ -68,13 +68,7 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const removeFromCart = (productId: number) => {
-    const isItemInCart = items.find(
-      (cartItem) => cartItem.product.id === productId
-    );
-
-    if (isItemInCart?.quantity === 1) {
-      setItems(items.filter((cartItem) => cartItem.product.id !== productId));
-    }
+    setItems(items.filter((cartItem) => cartItem.product.id !== productId));
   };
 
   const clearCart = () => {
