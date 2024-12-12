@@ -1,3 +1,8 @@
+type Reviews = {
+  rating: number 
+}
+
+
 export interface IProduct {
   id: number;
   title: string;
@@ -8,4 +13,5 @@ export interface IProduct {
   stock: number;
   thumbnail: string;
   images: string[];
+  reviews: Reviews[];
 }
