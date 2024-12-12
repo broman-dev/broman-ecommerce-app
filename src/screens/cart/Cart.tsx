@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "../../components/layout/Layout";
-import "./Cart.scss";
 import { FC } from "react";
 import { faArrowRight, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../../hooks/useCart";
 import QuantityPicker from "../../components/ui/quantityPicker/QuantityPicker";
+import { Link } from "react-router-dom";
 
 const Cart: FC = () => {
   const { items, getTotalSum, removeFromCart, addToCart, clearCart } =
@@ -50,7 +50,12 @@ const Cart: FC = () => {
                     </div>
                     <div className="pro-data w-full max-w-sm ">
                       <h5 className="font-semibold text-xl leading-8 text-black max-[550px]:text-center">
-                        {item.product.title}
+                        <Link
+                          to={`/product/${item.product.id}`}
+                          className="hover:text-[#135fa3]"
+                        >
+                          {item.product.title}
+                        </Link>
                       </h5>
                       <h6 className="font-medium text-lg leading-8 text-indigo-600  max-[550px]:text-center">
                         {item.product.price} €
