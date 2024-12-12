@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCart } from "../../hooks/useCart";
 import { IProduct } from "../../interfaces/IProduct";
 import QuantityPicker from "../ui/quantityPicker/QuantityPicker";
@@ -18,7 +19,9 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
       </div>
 
       <div className="contentBox">
+        <Link to={`/product/${item.id}`}>
         <h3>{item.title}</h3>
+        </Link>
         <h2 className="price">{item.price} €</h2>
         {getQuantity!(item?.id!) == 0 ? (
           <a

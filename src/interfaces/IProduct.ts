@@ -1,5 +1,8 @@
 type Reviews = {
-  rating: number 
+  rating: number;
+  reviewerName: string;
+  comment: string;
+  date: string;
 }
 
 

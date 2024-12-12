@@ -67,6 +67,10 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
+
+  &:hover {
+    color: #135fa3;
+  }
 }
 
 .product-card .contentBox .price {
