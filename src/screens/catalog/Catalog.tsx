@@ -5,7 +5,7 @@ import {
   getProducts,
   getProductsByCategory,
 } from "../../services/ProductService";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useLocation } from "react-router-dom";
 import "./Catalog.scss";
 import Layout from "../../components/layout/Layout";
 import LoadingWrapper from "../../components/ui/loadingWrapper/LoadingWrapper";
@@ -32,7 +32,12 @@ export const Catalog: FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { category } = useParams();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const [products, setProducts] = useState<IProduct[]>([]);
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    category ?? null
+  );
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [itemsPerPage, setItemsPerPage] = useState<number>(12);
@@ -43,11 +48,25 @@ export const Catalog: FC = () => {
   const pageQueryParam = (searchParams.get("page") ?? 1) as number;
   const [currentPage, setCurrentPage] = useState<number>(pageQueryParam);
 
+  useEffect(() => {
+    const containCategory = location.pathname.includes("/catalog");
+    if (containCategory) {
+      let cat = location.pathname.split("/").pop();
+      if (cat == "catalog") cat = undefined;
+      setSelectedCategory(cat ?? null);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
+
   useLayoutEffect(() => {
-    const skip = currentPage * itemsPerPage - 1;
-    if (category) {
+    const skip = currentPage * itemsPerPage - itemsPerPage;
+
+    if (!!selectedCategory) {
       getProductsByCategory(
-        category,
+        selectedCategory,
         itemsPerPage,
         skip,
         sortingOptions[sortOptIndex]?.value ?? null
@@ -67,7 +86,7 @@ export const Catalog: FC = () => {
         setIsLoading(false);
       });
     }
-  }, [currentPage, sortOptIndex]);
+  }, [currentPage, sortOptIndex, selectedCategory]);
 
   const paginationHandler = (page: number) => {
     setCurrentPage(page);

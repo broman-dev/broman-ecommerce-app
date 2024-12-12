@@ -2,7 +2,7 @@ import { FC, useLayoutEffect, useState } from "react";
 import "./Categories.scss";
 import { ICategory } from "../../../../interfaces/ICategory";
 import { getAllCategories } from "../../../../services/CategoryService";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import loader from "../../../../assets/loading.gif";
 import LoadingWrapper from "../../../ui/loadingWrapper/LoadingWrapper";
 
@@ -26,14 +26,26 @@ const CategoriesWidget: FC = () => {
           <LoadingWrapper isLoading={isLoading}>
             <>
               <li className={category ? undefined : "active"}>
-                <a href="/catalog">All</a>
+                <Link
+                  to={{
+                    pathname: `/catalog`,
+                  }}
+                >
+                  All
+                </Link>
               </li>
               {items.map((item) => (
                 <li
                   key={item.slug}
                   className={category === item.slug ? "active" : undefined}
                 >
-                  <a href={`/catalog/${item.slug}`}>{item.name}</a>
+                  <Link
+                    to={{
+                      pathname: `/catalog/${item.slug}`,
+                    }}
+                  >
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </>
