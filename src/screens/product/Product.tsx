@@ -90,13 +90,13 @@ const Product: FC = () => {
                       {review.reviewerName}
                     </p>
                     <p className="text-sm text-gray-600">
-                      rated with {review.rating} points on {new Date(review.date).toLocaleDateString("en-us", {
+                      rated with {review.rating} points on{" "}
+                      {new Date(review.date).toLocaleDateString("en-us", {
                         weekday: "long",
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                       })}
-                      
                     </p>
                   </div>
                   <p className="text-gray-500 p-4">{review.comment}</p>

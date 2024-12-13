@@ -1,21 +1,21 @@
 .categories-widget {
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-  
-      li {
-        cursor: pointer;
-        border-radius: 15px;
-        &:hover,
-        &.active {
-          background: #f1f1f1;
-        }
-  
-        a {
-          display: block;
-          padding: 10px 15px;
-        }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    li {
+      cursor: pointer;
+      border-radius: 15px;
+      &:hover,
+      &.active {
+        background: #f1f1f1;
+      }
+
+      a {
+        display: block;
+        padding: 10px 15px;
       }
     }
   }
+}

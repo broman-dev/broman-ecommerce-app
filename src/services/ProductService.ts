@@ -17,12 +17,12 @@ export async function getProducts(
   let queryPath = `/products`;
 
   if (category) {
-    queryPath += `/category/${category}`
+    queryPath += `/category/${category}`;
   }
 
   queryPath += `?limit=${limit}&skip=${skip}`;
 
-  if (sortValue && sortValue.includes('-')) {
+  if (sortValue && sortValue.includes("-")) {
     let sort = sortValue.split("-");
     queryPath += `&sortBy=${sort[0]}&order=${sort[1]}`;
   }

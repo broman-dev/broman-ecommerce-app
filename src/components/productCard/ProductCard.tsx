@@ -20,25 +20,26 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
 
       <div className="contentBox">
         <Link to={`/product/${item.id}`}>
-        <h3>{item.title}</h3>
+          <h3>{item.title}</h3>
         </Link>
         <h2 className="price">{item.price} €</h2>
         {getQuantity!(item?.id!) == 0 ? (
           <a
             onClick={() => addToCart!({ product: item, quantity: 1 })}
-            className="buy">
+            className="buy"
+          >
             Buy Now
           </a>
         ) : (
           <div className="quantity-picker-wrapper">
             <span>Quantity:</span>
-          <QuantityPicker
-            min={0}
-            max={item?.stock!}
-            step={1}
-            value={getQuantity!(item?.id!)}
-            onChange={(q) => addToCart!({ product: item!, quantity: q })}
-          />
+            <QuantityPicker
+              min={0}
+              max={item?.stock!}
+              step={1}
+              value={getQuantity!(item?.id!)}
+              onChange={(q) => addToCart!({ product: item!, quantity: q })}
+            />
           </div>
         )}
       </div>

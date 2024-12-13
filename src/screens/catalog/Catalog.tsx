@@ -89,7 +89,7 @@ export const Catalog: FC = () => {
   }, [cattegory, skipCount, sortIndex]);
 
   const paginationHandler = (page: number) => {
-    console.log("paginationHandler", page)
+    console.log("paginationHandler", page);
     setSkipCount(page * limit - limit);
     window.scrollTo({
       behavior: "smooth",

@@ -66,7 +66,10 @@ const CartSidebar: FC<CartSidebarProps> = ({ close }) => {
                             <div>
                               <div className="flex justify-between text-base font-medium text-gray-900">
                                 <h3>
-                                  <Link to={`/product/${item.product.id}`} className="hover:text-[#135fa3]">
+                                  <Link
+                                    to={`/product/${item.product.id}`}
+                                    className="hover:text-[#135fa3]"
+                                  >
                                     {item.product.title}
                                   </Link>
                                 </h3>

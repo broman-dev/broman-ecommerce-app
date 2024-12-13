@@ -3,8 +3,7 @@ type Reviews = {
   reviewerName: string;
   comment: string;
   date: string;
-}
-
+};
 
 export interface IProduct {
   id: number;

@@ -1,13 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "../../components/layout/Layout";
 import { FC } from "react";
-import { faArrowRight, faInbox } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faInbox,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../../hooks/useCart";
 import QuantityPicker from "../../components/ui/quantityPicker/QuantityPicker";
 import { Link } from "react-router-dom";
 
 const Cart: FC = () => {
-  const { items, getTotalSum, removeFromCart, addToCart, clearCart } =
+  const { items, getTotalSum, addToCart, removeFromCart, clearCart } =
     useCart();
 
   return (
@@ -30,13 +34,14 @@ const Cart: FC = () => {
                 <div className="font-normal text-xl leading-8 text-gray-500">
                   Product
                 </div>
-                <p className="font-normal text-xl leading-8 text-gray-500 flex items-center justify-between">
-                  <span className="w-full max-w-[200px] justify-center text-center">
+                <p className="font-normal text-xl leading-8 text-gray-500 flex items-center justify-end">
+                  <span className="w-full max-w-[400px] justify-center text-center">
                     Quantity
                   </span>
                   <span className="w-full max-w-[200px] justify-center text-center">
                     Total
                   </span>
+                  <span className="w-full max-w-[100px] justify-center text-center"></span>
                 </p>
               </div>
               {items.map((item) => (
@@ -80,6 +85,15 @@ const Cart: FC = () => {
                     <h6 className="text-indigo-600 font-manrope font-bold text-2xl leading-9 w-full max-w-[200px] text-center">
                       {(item.product.price * item.quantity).toFixed(2)} €
                     </h6>
+                    <div className="w-full max-w-[100px] justify-center text-center">
+                      <button
+                        type="button"
+                        className="text-[16px] hover:scale-[1.2]"
+                        onClick={() => removeFromCart!(item.product.id)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

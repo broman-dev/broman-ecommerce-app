@@ -20,7 +20,7 @@ const QuantityPicker: FC<QuantityPickerProps> = ({
 }) => {
   const [count, setCount] = useState<number>(value);
 
-  useEffect(()=>{
+  useEffect(() => {
     onChange(count);
   }, [count]);
 
@@ -28,7 +28,7 @@ const QuantityPicker: FC<QuantityPickerProps> = ({
     setCount((prev) => {
       if (prev - step < min) return prev;
       return prev - step;
-    });    
+    });
   };
 
   const onIncrease = () => {
