@@ -134,7 +134,7 @@ export const Catalog: FC = () => {
             ))}
           </div>
           <div className="pagination-wrapper">
-            <Pagination
+          <Pagination
               itemsPerPage={limit}
               itemsCount={totalCount}
               currentPage={currentPage}

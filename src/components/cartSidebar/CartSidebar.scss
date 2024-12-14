@@ -1,0 +1,26 @@
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: inherit;
+    width: 480px;
+
+    .cart-sidebar-content {
+        display: flex;
+        height: inherit;
+        flex-direction: column;
+        background: #FFF;
+        overflow: hidden;
+
+    }
+
+}
+
+@media (max-width: 768px) {
+    .cart-sidebar {
+        width: 100%; 
+    }
+    .cart-sidebar-content {
+        padding: 1rem 1.5rem;
+    }
+}

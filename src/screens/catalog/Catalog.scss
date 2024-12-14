@@ -31,3 +31,17 @@
     min-width: min-content;
   }
 }
+
+@media (max-width: 980px) {
+  .catalog-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .catalog-grid {
+    gap: 0.5rem;
+    grid-template-rows: repeat(auto-fit, 290px);
+    grid-template-columns: repeat(auto-fit, 160px);
+  }
+}

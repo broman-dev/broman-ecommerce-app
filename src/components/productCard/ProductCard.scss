@@ -104,3 +104,16 @@
   top: 0px;
   opacity: 1;
 }
+
+@media (max-width: 768px) {
+  .product-card .contentBox {
+    h3 {
+      font-size: 0.75rem;
+    }
+
+    .buy {
+      top: 0px;
+      opacity: 1;
+    }
+  }
+}

@@ -1,0 +1,75 @@
+.promo {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 490px;
+
+  .promo-content {
+    text-align: center;
+    padding: 6rem 1.25rem;
+    z-index: 1;
+
+    h1 {
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    p {
+      margin-bottom: 2rem;
+      line-height: 1.625;
+      text-align: center;
+    }
+
+    .promo-add-to-cart-btn {
+      display: inline-flex;
+      color: #fff;
+      background-color: #3b82f6;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.25rem;
+      font-size: 1.125rem;
+
+      &:hover {
+        background-color: #2563eb;
+      }
+    }
+  }
+
+  .promo-image {
+    height: 100%;
+
+    img {
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .promo {
+    .promo-content {
+      align-items: flex-end;
+      height: 100%;
+      background-color: rgba(37, 37, 37, 0.403);
+      color: #fff;
+      align-self: center;
+      justify-self: center;
+      border-radius: 8px;
+    }
+
+    .promo-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      img {
+        margin: 0 auto;
+      }
+    }
+  }
+}
